@@ -13,12 +13,13 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0, 0, 0, 1)
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_or25d"]
 bg_color = Color(0, 0.776471, 0, 0.964706)
-border_width_left = 2
-border_width_top = 2
-border_width_bottom = 2
 border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cqq2o"]
@@ -149,7 +150,7 @@ theme_override_fonts/font = ExtResource("2_60u7l")
 theme_override_font_sizes/font_size = 32
 text = "PLAYER"
 
-[node name="EnemyHealth" type="ProgressBar" parent="PlayerHUD/PlayerData"]
+[node name="PlayerHealth" type="ProgressBar" parent="PlayerHUD/PlayerData"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -164,7 +165,7 @@ step = 1.0
 value = 50.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="PlayerHUD/PlayerData/EnemyHealth"]
+[node name="Label" type="Label" parent="PlayerHUD/PlayerData/PlayerHealth"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -178,7 +179,6 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_60u7l")
 theme_override_font_sizes/font_size = 32
-text = "HP: xx / XX"
 horizontal_alignment = 1
 
 [node name="PlayerActionsHUD" type="Panel" parent="."]
@@ -289,4 +289,5 @@ autowrap_mode = 3
 [node name="FlickerTicker" type="Timer" parent="."]
 wait_time = 0.6
 
+[connection signal="pressed" from="PlayerActionsHUD/Actions/Run" to="." method="_on_run_pressed"]
 [connection signal="timeout" from="FlickerTicker" to="." method="_on_flicker_ticker_timeout"]
