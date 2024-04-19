@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://bv5ri6qtrrj4a"]
+[gd_scene load_steps=18 format=3 uid="uid://bv5ri6qtrrj4a"]
 
 [ext_resource type="Texture2D" uid="uid://dvy3sgeyiiifm" path="res://preview.png" id="1_7tk42"]
 [ext_resource type="Script" path="res://battle_scene.gd" id="1_tdewn"]
 [ext_resource type="FontFile" uid="uid://87i2llv2s7s2" path="res://NESCyrillic.ttf" id="2_60u7l"]
-[ext_resource type="Texture2D" uid="uid://cuejlgaif7o6f" path="res://x2 size/02b.png" id="2_xo5rb"]
+[ext_resource type="Resource" uid="uid://dvkribajeklrw" path="res://Dingus.tres" id="2_r850x"]
 [ext_resource type="FontFile" uid="uid://cm1owaileyixk" path="res://Adventurer.ttf" id="4_i47o1"]
+[ext_resource type="Texture2D" uid="uid://2mgjhimh0sh8" path="res://x2 size/01.png" id="5_fsnrq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w42rd"]
 bg_color = Color(0.784314, 0, 0, 1)
@@ -52,6 +53,74 @@ border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
 
+[sub_resource type="Animation" id="Animation_y6sth"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyContainer/EnemySprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemyContainer/EnemySprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bsfad"]
+resource_name = "enemy_damaged"
+length = 0.44
+step = 0.055
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyContainer/EnemySprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.388777, 0.44),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_8lvfl"]
+resource_name = "enemy_attack"
+length = 0.77
+step = 0.055
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyContainer/EnemySprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.385, 0.44),
+"transitions": PackedFloat32Array(0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8aogf"]
+_data = {
+"RESET": SubResource("Animation_y6sth"),
+"enemy_attack": SubResource("Animation_8lvfl"),
+"enemy_damaged": SubResource("Animation_bsfad")
+}
+
 [node name="BattleScene" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -60,8 +129,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tdewn")
+enemy = ExtResource("2_r850x")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -115,10 +186,11 @@ text = "HP: XX/XX"
 horizontal_alignment = 1
 
 [node name="EnemySprite" type="TextureRect" parent="EnemyContainer"]
+texture_filter = 3
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
-texture = ExtResource("2_xo5rb")
+texture = ExtResource("5_fsnrq")
 
 [node name="PlayerHUD" type="Panel" parent="."]
 layout_mode = 1
@@ -203,6 +275,7 @@ grow_vertical = 2
 alignment = 1
 
 [node name="Attack" type="Button" parent="PlayerActionsHUD/Actions"]
+texture_filter = 3
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -217,6 +290,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_p6jg5")
 text = "ATTACK"
 
 [node name="Defend" type="Button" parent="PlayerActionsHUD/Actions"]
+texture_filter = 3
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -231,6 +305,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_p6jg5")
 text = "DEFEND"
 
 [node name="Run" type="Button" parent="PlayerActionsHUD/Actions"]
+texture_filter = 3
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -256,6 +331,7 @@ grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4v1wx")
 
 [node name="Label" type="Label" parent="BattleText"]
+texture_filter = 3
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -289,5 +365,11 @@ autowrap_mode = 3
 [node name="FlickerTicker" type="Timer" parent="."]
 wait_time = 0.6
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8aogf")
+}
+
+[connection signal="pressed" from="PlayerActionsHUD/Actions/Attack" to="." method="_on_attack_pressed"]
 [connection signal="pressed" from="PlayerActionsHUD/Actions/Run" to="." method="_on_run_pressed"]
 [connection signal="timeout" from="FlickerTicker" to="." method="_on_flicker_ticker_timeout"]

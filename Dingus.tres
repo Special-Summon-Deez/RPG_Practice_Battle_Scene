@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dvkribajeklrw"]
+
+[ext_resource type="Script" path="res://Scripts/EnemyResource.gd" id="1_r2oyj"]
+[ext_resource type="Texture2D" uid="uid://cuejlgaif7o6f" path="res://x2 size/02b.png" id="2_n3hh6"]
+
+[resource]
+script = ExtResource("1_r2oyj")
+name = "Dingus"
+texture = ExtResource("2_n3hh6")
+health = 30
+damage = 8
