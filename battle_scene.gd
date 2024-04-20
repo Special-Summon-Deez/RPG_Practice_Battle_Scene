@@ -6,6 +6,7 @@ signal pressedEnter
 
 var currentPlayerHealth
 var currentEnemyHealth
+var currentPlayerDefence = State.playerDefence
 
 func _ready():
 	setHealth($EnemyContainer/EnemyHealth, enemy.health, enemy.health)
@@ -51,14 +52,39 @@ func enemyTurn():
 	display_text("The %s attacks with all their might!" % [enemy.name])
 	$AnimationPlayer.play("enemy_attack")
 	await $AnimationPlayer.animation_finished
+	currentPlayerHealth = max(0, currentPlayerHealth - (enemy.damage / currentPlayerDefence))
 	await pressedEnter
-	display_text("The %s dealt %s damage to you!" % [enemy.name, enemy.damage])
+	if currentPlayerHealth <= 0:
+		display_text("The %s dealt %s damage to you!
+		That's mortal damage!" % [enemy.name, (enemy.damage / currentPlayerDefence)])
+		$AnimationPlayer.play("big_shake")
+		setHealth($PlayerHUD/PlayerData/PlayerHealth, currentPlayerHealth, State.maxHealth)
+		await $AnimationPlayer.animation_finished
+		await pressedEnter
+		playerDefeated()
+	else:
+		display_text("The %s dealt %s damage to you!" % [enemy.name, (enemy.damage / currentPlayerDefence)])
+		$AnimationPlayer.play("shake")
+		setHealth($PlayerHUD/PlayerData/PlayerHealth, currentPlayerHealth, State.maxHealth)
+		await $AnimationPlayer.animation_finished
+		await pressedEnter
+		currentPlayerDefence = State.playerDefence
+		$BattleText.hide()
+		$PlayerActionsHUD.show()
+
+func enemyDefeated():
+	display_text("You destroyed the %s." % [enemy.name])
+	$AnimationPlayer.play("enemy_defeated")
+	await $AnimationPlayer.animation_finished
+	display_text("YOU WON!")
 	await pressedEnter
-	currentPlayerHealth = max(0, currentPlayerHealth - enemy.damage)
-	setHealth($PlayerHUD/PlayerData/PlayerHealth, currentPlayerHealth, State.maxHealth)
-	$BattleText.hide()
-	$PlayerActionsHUD.show()
-	
+	get_tree().quit()
+
+func playerDefeated():
+	$PlayerHUD/PlayerData/Label.add_theme_color_override("font_color", Color("#FF0000"))
+	display_text("Lol you died.")
+	await pressedEnter
+	get_tree().quit()
 
 func _input(event):
 	if event.is_action_pressed("ui_select") || event.is_action_released("LeftMouse"):
@@ -79,5 +105,17 @@ func _on_attack_pressed():
 	display_text("You dealt %s damage to the %s!" % [State.playerDamage, enemy.name])
 	await $AnimationPlayer.animation_finished
 	await pressedEnter
-	tickerSwitch(false)
+	if(currentEnemyHealth <= 0):
+		enemyDefeated()
+	else:
+		tickerSwitch(false)
+		enemyTurn()
+
+
+func _on_defend_pressed():
+	display_text("You take a defensive stance.")
+	currentPlayerDefence = currentPlayerDefence * 2
+	await pressedEnter
 	enemyTurn()
+	
+	

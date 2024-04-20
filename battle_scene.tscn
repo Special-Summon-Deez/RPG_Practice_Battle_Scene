@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bv5ri6qtrrj4a"]
+[gd_scene load_steps=21 format=3 uid="uid://bv5ri6qtrrj4a"]
 
 [ext_resource type="Texture2D" uid="uid://dvy3sgeyiiifm" path="res://preview.png" id="1_7tk42"]
 [ext_resource type="Script" path="res://battle_scene.gd" id="1_tdewn"]
@@ -79,22 +79,29 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
-
-[sub_resource type="Animation" id="Animation_bsfad"]
-resource_name = "enemy_damaged"
-length = 0.44
-step = 0.055
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("EnemyContainer/EnemySprite:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.388777, 0.44),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [true, false, true, false, true, false, true, false, true]
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EnemyContainer/EnemyHealth:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_8lvfl"]
@@ -114,11 +121,94 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_bsfad"]
+resource_name = "enemy_damaged"
+length = 0.44
+step = 0.055
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyContainer/EnemySprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.388777, 0.44),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_bg6we"]
+resource_name = "shake"
+length = 0.44
+step = 0.055
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.385, 0.44),
+"transitions": PackedFloat32Array(5, 3, 3, 3, 2, 2, 1.5, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -10), Vector2(0, 0), Vector2(0, 10), Vector2(0, 0), Vector2(0, -5), Vector2(0, 0), Vector2(0, 5), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qtxps"]
+resource_name = "enemy_defeated"
+length = 1.1125
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyContainer/EnemySprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(10.556, 1, 1, 1.31951),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(15, 15, 0, 1), Color(50, 50, 50, 1), Color(100, 100, 100, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemyContainer/EnemyHealth:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1.31),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_b76er"]
+resource_name = "big_shake"
+length = 0.88
+step = 0.055
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.385, 0.44, 0.495, 0.55, 0.605, 0.66, 0.715, 0.77, 0.825, 0.88),
+"transitions": PackedFloat32Array(5, 3, 3, 3, 2.5, 2.5, 2.5, 2.5, 1.5, 1.5, 1.5, 1.5, 1.25, 1.25, 1.25, 1.25, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -30), Vector2(0, 0), Vector2(0, 30), Vector2(0, 0), Vector2(0, -20), Vector2(0, 0), Vector2(0, 20), Vector2(0, 0), Vector2(0, -10), Vector2(0, 0), Vector2(0, 10), Vector2(0, 0), Vector2(0, -5), Vector2(0, 0), Vector2(0, 5), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8aogf"]
 _data = {
 "RESET": SubResource("Animation_y6sth"),
+"big_shake": SubResource("Animation_b76er"),
 "enemy_attack": SubResource("Animation_8lvfl"),
-"enemy_damaged": SubResource("Animation_bsfad")
+"enemy_damaged": SubResource("Animation_bsfad"),
+"enemy_defeated": SubResource("Animation_qtxps"),
+"shake": SubResource("Animation_bg6we")
 }
 
 [node name="BattleScene" type="Control"]
@@ -137,6 +227,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_7tk42")
@@ -370,6 +464,10 @@ libraries = {
 "": SubResource("AnimationLibrary_8aogf")
 }
 
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
 [connection signal="pressed" from="PlayerActionsHUD/Actions/Attack" to="." method="_on_attack_pressed"]
+[connection signal="pressed" from="PlayerActionsHUD/Actions/Defend" to="." method="_on_defend_pressed"]
 [connection signal="pressed" from="PlayerActionsHUD/Actions/Run" to="." method="_on_run_pressed"]
 [connection signal="timeout" from="FlickerTicker" to="." method="_on_flicker_ticker_timeout"]
