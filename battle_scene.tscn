@@ -484,7 +484,6 @@ libraries = {
 anchor_mode = 0
 
 [connection signal="pressed" from="PlayerActionsHUD/Actions/Attack" to="." method="_on_attack_pressed"]
-[connection signal="pressed" from="PlayerActionsHUD/Actions/Skills" to="." method="_on_attack_pressed"]
 [connection signal="pressed" from="PlayerActionsHUD/Actions/Defend" to="." method="_on_defend_pressed"]
 [connection signal="pressed" from="PlayerActionsHUD/Actions/Run" to="." method="_on_run_pressed"]
 [connection signal="timeout" from="FlickerTicker" to="." method="_on_flicker_ticker_timeout"]
