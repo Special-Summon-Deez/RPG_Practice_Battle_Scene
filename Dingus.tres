@@ -8,4 +8,4 @@ script = ExtResource("1_r2oyj")
 name = "Dingus"
 texture = ExtResource("2_n3hh6")
 health = 30
-damage = 25
+damage = 15

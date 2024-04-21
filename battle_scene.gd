@@ -1,12 +1,18 @@
 extends Control
 
 signal pressedEnter
+signal pressedCancel
 
 @export var enemy : Resource = null
 
 var currentPlayerHealth
-var currentEnemyHealth
+var currentPlayerDamage = State.playerDamage
 var currentPlayerDefence = State.playerDefence
+
+var fireballDamage = 5
+
+var currentEnemyHealth
+
 
 func _ready():
 	setHealth($EnemyContainer/EnemyHealth, enemy.health, enemy.health)
@@ -14,6 +20,7 @@ func _ready():
 	$EnemyContainer/EnemySprite.texture = enemy.texture
 	$BattleText.hide()
 	$PlayerActionsHUD.hide()
+	$SkillMenu.hide()
 	currentPlayerHealth = State.currentHealth
 	currentEnemyHealth = enemy.health
 	display_text("Oh man, here comes %s again. When will he learn?" % [enemy.name])
@@ -21,9 +28,6 @@ func _ready():
 	tickerSwitch(false)
 	$BattleText.hide()
 	$PlayerActionsHUD.show()
-
-func _process(delta):
-	pass
 
 func display_text(text):
 	$PlayerActionsHUD.hide()
@@ -47,7 +51,7 @@ func setHealth(progress_bar, currentHealth, maxHealth):
 	progress_bar.value = currentHealth
 	progress_bar.max_value = maxHealth
 	progress_bar.get_node("Label").text = "HP: %d / %d" % [currentHealth, maxHealth]
-	
+
 func enemyTurn():
 	display_text("The %s attacks with all their might!" % [enemy.name])
 	$AnimationPlayer.play("enemy_attack")
@@ -89,6 +93,8 @@ func playerDefeated():
 func _input(event):
 	if event.is_action_pressed("ui_select") || event.is_action_released("LeftMouse"):
 		pressedEnter.emit()
+	elif event.is_action_pressed("RightMouse"):
+		pressedCancel.emit()
 
 func _on_flicker_ticker_timeout():
 	$BattleText/Ticker.visible = !($BattleText/Ticker.visible)
@@ -99,23 +105,63 @@ func _on_run_pressed():
 func _on_attack_pressed():
 	display_text("You attacked the %s." % [enemy.name])
 	await pressedEnter
-	currentEnemyHealth =  max(0, currentEnemyHealth - State.playerDamage)
+	currentEnemyHealth =  max(0, currentEnemyHealth - currentPlayerDamage)
 	setHealth($EnemyContainer/EnemyHealth, currentEnemyHealth, enemy.health)
 	$AnimationPlayer.play("enemy_damaged")
-	display_text("You dealt %s damage to the %s!" % [State.playerDamage, enemy.name])
+	display_text("You dealt %s damage to the %s!" % [currentPlayerDamage, enemy.name])
 	await $AnimationPlayer.animation_finished
 	await pressedEnter
 	if(currentEnemyHealth <= 0):
 		enemyDefeated()
 	else:
-		tickerSwitch(false)
 		enemyTurn()
-
 
 func _on_defend_pressed():
 	display_text("You take a defensive stance.")
 	currentPlayerDefence = currentPlayerDefence * 2
 	await pressedEnter
 	enemyTurn()
+
+func _on_skills_pressed():
+	$PlayerActionsHUD.hide()
+	$SkillMenu.show()
+	while $SkillMenu.visible:
+		await pressedCancel
+		$SkillMenu.hide()
+		$PlayerActionsHUD.show()
+
+
+func _on_fire_pressed():
+	$SkillMenu.hide()
+	display_text("You cast fire on the %s." % [enemy.name])
+	await pressedEnter
+	currentEnemyHealth =  max(0, currentEnemyHealth - (State.playerDamage + fireballDamage))
+	setHealth($EnemyContainer/EnemyHealth, currentEnemyHealth, enemy.health)
+	$AnimationPlayer.play("enemy_damaged")
+	display_text("You dealt %s damage to the %s!" % [State.playerDamage + fireballDamage, enemy.name])
+	await $AnimationPlayer.animation_finished
+	await pressedEnter
+	if(currentEnemyHealth <= 0):
+		enemyDefeated()
+	else:
+		enemyTurn()
+
+
+func _on_life_up_pressed():
+	$SkillMenu.hide()
+	display_text("You cast a Life Up spell to heal your oofs and owies.")
+	await pressedEnter
+	currentPlayerHealth =  min(State.maxHealth, currentPlayerHealth + State.playerDamage)
+	setHealth($PlayerHUD/PlayerData/PlayerHealth, currentPlayerHealth, State.maxHealth)
+	display_text("You cast a Life Up spell to heal your oofs and owies.")
+	await pressedEnter
+	enemyTurn()
 	
-	
+func _on_valor_pressed():
+	$SkillMenu.hide()
+	display_text("You cast a Valor spell to buff your muscles")
+	currentPlayerDamage = currentPlayerDamage + 9
+	await pressedEnter
+	enemyTurn()
+
+

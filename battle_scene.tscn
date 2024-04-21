@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bv5ri6qtrrj4a"]
+[gd_scene load_steps=25 format=3 uid="uid://bv5ri6qtrrj4a"]
 
 [ext_resource type="Texture2D" uid="uid://dvy3sgeyiiifm" path="res://preview.png" id="1_7tk42"]
 [ext_resource type="Script" path="res://battle_scene.gd" id="1_tdewn"]
@@ -53,6 +53,21 @@ border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ejj4j"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tougk"]
+
+[sub_resource type="Theme" id="Theme_um0pu"]
+Button/styles/normal = SubResource("StyleBoxFlat_tougk")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puhpm"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [sub_resource type="Animation" id="Animation_y6sth"]
 length = 0.001
 tracks/0/type = "value"
@@ -104,6 +119,23 @@ tracks/3/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_b76er"]
+resource_name = "big_shake"
+length = 0.88
+step = 0.055
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.385, 0.44, 0.495, 0.55, 0.605, 0.66, 0.715, 0.77, 0.825, 0.88),
+"transitions": PackedFloat32Array(5, 3, 3, 3, 2.5, 2.5, 2.5, 2.5, 1.5, 1.5, 1.5, 1.5, 1.25, 1.25, 1.25, 1.25, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -30), Vector2(0, 0), Vector2(0, 30), Vector2(0, 0), Vector2(0, -20), Vector2(0, 0), Vector2(0, 20), Vector2(0, 0), Vector2(0, -10), Vector2(0, 0), Vector2(0, 10), Vector2(0, 0), Vector2(0, -5), Vector2(0, 0), Vector2(0, 5), Vector2(0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_8lvfl"]
 resource_name = "enemy_attack"
 length = 0.77
@@ -138,23 +170,6 @@ tracks/0/keys = {
 "values": [true, false, true, false, true, false, true, false, true]
 }
 
-[sub_resource type="Animation" id="Animation_bg6we"]
-resource_name = "shake"
-length = 0.44
-step = 0.055
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.385, 0.44),
-"transitions": PackedFloat32Array(5, 3, 3, 3, 2, 2, 1.5, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -10), Vector2(0, 0), Vector2(0, 10), Vector2(0, 0), Vector2(0, -5), Vector2(0, 0), Vector2(0, 5), Vector2(0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_qtxps"]
 resource_name = "enemy_defeated"
 length = 1.1125
@@ -184,9 +199,9 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_b76er"]
-resource_name = "big_shake"
-length = 0.88
+[sub_resource type="Animation" id="Animation_bg6we"]
+resource_name = "shake"
+length = 0.44
 step = 0.055
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -195,10 +210,10 @@ tracks/0/path = NodePath("Camera2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.385, 0.44, 0.495, 0.55, 0.605, 0.66, 0.715, 0.77, 0.825, 0.88),
-"transitions": PackedFloat32Array(5, 3, 3, 3, 2.5, 2.5, 2.5, 2.5, 1.5, 1.5, 1.5, 1.5, 1.25, 1.25, 1.25, 1.25, 1),
+"times": PackedFloat32Array(0, 0.055, 0.11, 0.165, 0.22, 0.275, 0.33, 0.385, 0.44),
+"transitions": PackedFloat32Array(5, 3, 3, 3, 2, 2, 1.5, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, -30), Vector2(0, 0), Vector2(0, 30), Vector2(0, 0), Vector2(0, -20), Vector2(0, 0), Vector2(0, 20), Vector2(0, 0), Vector2(0, -10), Vector2(0, 0), Vector2(0, 10), Vector2(0, 0), Vector2(0, -5), Vector2(0, 0), Vector2(0, 5), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(0, -10), Vector2(0, 0), Vector2(0, 10), Vector2(0, 0), Vector2(0, -5), Vector2(0, 0), Vector2(0, 5), Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8aogf"]
@@ -429,7 +444,6 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_p6jg5")
 text = "RUN"
 
 [node name="BattleText" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -472,6 +486,94 @@ theme_override_font_sizes/font_size = 32
 text = ">"
 autowrap_mode = 3
 
+[node name="SkillMenu" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 792.0
+offset_bottom = 152.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ejj4j")
+
+[node name="TabContainer" type="TabContainer" parent="SkillMenu"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 782.0
+offset_bottom = 141.0
+
+[node name="Offensive" type="HSplitContainer" parent="SkillMenu/TabContainer"]
+layout_mode = 2
+theme = SubResource("Theme_um0pu")
+split_offset = 235
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SkillMenu/TabContainer/Offensive"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Fire" type="Button" parent="SkillMenu/TabContainer/Offensive/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_60u7l")
+theme_override_font_sizes/font_size = 26
+text = "FIRE
+"
+
+[node name="Freeze" type="Button" parent="SkillMenu/TabContainer/Offensive/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_60u7l")
+theme_override_font_sizes/font_size = 26
+text = "FREEZE
+"
+
+[node name="Thunder" type="Button" parent="SkillMenu/TabContainer/Offensive/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_60u7l")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_puhpm")
+text = "THUNDER"
+
+[node name="SkillInfo" type="Panel" parent="SkillMenu/TabContainer/Offensive"]
+layout_mode = 2
+
+[node name="Recovery" type="HSplitContainer" parent="SkillMenu/TabContainer"]
+layout_mode = 2
+split_offset = 235
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SkillMenu/TabContainer/Recovery"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LifeUp" type="Button" parent="SkillMenu/TabContainer/Recovery/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_60u7l")
+theme_override_font_sizes/font_size = 26
+text = "LIFE UP
+"
+
+[node name="SkillInfo" type="Panel" parent="SkillMenu/TabContainer/Recovery"]
+layout_mode = 2
+
+[node name="Assist" type="HSplitContainer" parent="SkillMenu/TabContainer"]
+layout_mode = 2
+split_offset = 235
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SkillMenu/TabContainer/Assist"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Valor" type="Button" parent="SkillMenu/TabContainer/Assist/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_60u7l")
+theme_override_font_sizes/font_size = 26
+text = "VALOR
+"
+
+[node name="SkillInfo" type="Panel" parent="SkillMenu/TabContainer/Assist"]
+layout_mode = 2
+
 [node name="FlickerTicker" type="Timer" parent="."]
 wait_time = 0.6
 
@@ -484,6 +586,10 @@ libraries = {
 anchor_mode = 0
 
 [connection signal="pressed" from="PlayerActionsHUD/Actions/Attack" to="." method="_on_attack_pressed"]
+[connection signal="pressed" from="PlayerActionsHUD/Actions/Skills" to="." method="_on_skills_pressed"]
 [connection signal="pressed" from="PlayerActionsHUD/Actions/Defend" to="." method="_on_defend_pressed"]
 [connection signal="pressed" from="PlayerActionsHUD/Actions/Run" to="." method="_on_run_pressed"]
+[connection signal="pressed" from="SkillMenu/TabContainer/Offensive/VBoxContainer/Fire" to="." method="_on_fire_pressed"]
+[connection signal="pressed" from="SkillMenu/TabContainer/Recovery/VBoxContainer/LifeUp" to="." method="_on_life_up_pressed"]
+[connection signal="pressed" from="SkillMenu/TabContainer/Assist/VBoxContainer/Valor" to="." method="_on_valor_pressed"]
 [connection signal="timeout" from="FlickerTicker" to="." method="_on_flicker_ticker_timeout"]
